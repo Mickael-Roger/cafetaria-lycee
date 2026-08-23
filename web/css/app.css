@@ -1,0 +1,311 @@
+/* Cafeteria PWA - mobile first */
+
+:root {
+  --primary: #2e7d32;
+  --primary-dark: #1b5e20;
+  --primary-light: #e8f5e9;
+  --accent: #fbc02d;
+  --danger: #c62828;
+  --bg: #f4f6f5;
+  --card: #ffffff;
+  --text: #1f2422;
+  --text-muted: #6b7570;
+  --radius: 14px;
+  --shadow: 0 2px 8px rgba(20, 40, 25, 0.10);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  font-family: "Roboto", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hidden { display: none !important; }
+
+.view { min-height: 100%; }
+
+/* ---------------- Login ---------------- */
+
+#view-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  min-height: 100vh;
+  background: linear-gradient(160deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 26px;
+  text-align: center;
+}
+
+.login-logo {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  margin-bottom: 12px;
+}
+
+.login-card h1 {
+  font-size: 1.5rem;
+  color: var(--primary-dark);
+}
+
+.login-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 6px 0 22px;
+}
+
+#login-form { text-align: left; }
+
+#login-form label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 14px 0 4px;
+}
+
+#login-form input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1.5px solid #cfd8d3;
+  border-radius: 10px;
+  background: #fafcfb;
+  outline: none;
+  transition: border-color .15s;
+}
+
+#login-form input:focus { border-color: var(--primary); }
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter .15s, opacity .15s;
+}
+
+.btn:disabled { opacity: .55; cursor: default; }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:not(:disabled):active { filter: brightness(.9); }
+.btn-block { width: 100%; margin-top: 22px; }
+
+.btn-reserve { background: var(--primary); color: #fff; }
+.btn-cancel  { background: #eceff1; color: var(--danger); }
+.btn-ghost   { background: transparent; color: var(--primary); border: 1.5px solid var(--primary); }
+
+.error-text {
+  color: var(--danger);
+  font-size: 0.85rem;
+  margin-top: 14px;
+  text-align: center;
+}
+
+/* ---------------- Header ---------------- */
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
+  background: var(--primary);
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+
+.header-title h1 { font-size: 1.2rem; font-weight: 700; }
+
+.status-line {
+  display: block;
+  font-size: 0.72rem;
+  opacity: .85;
+}
+
+.header-actions { display: flex; gap: 6px; }
+
+.icon-btn {
+  background: rgba(255,255,255,.16);
+  border: none;
+  color: inherit;
+  font-size: 1.15rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:active { background: rgba(255,255,255,.3); }
+
+#view-main .icon-btn { color: #fff; }
+
+/* ---------------- Banners ---------------- */
+
+.offline-banner, .warning-banner {
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.offline-banner { background: #455a64; color: #fff; }
+
+.warning-banner {
+  background: var(--accent);
+  color: #4e3900;
+  font-weight: 600;
+}
+
+/* ---------------- Content ---------------- */
+
+.content {
+  padding: 16px;
+  padding-bottom: calc(32px + env(safe-area-inset-bottom));
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.credit-card {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.credit-label { font-size: .82rem; opacity: .85; }
+
+.credit-value { font-size: 2rem; font-weight: 700; letter-spacing: .5px; }
+
+.next-card {
+  margin-top: 14px;
+  background: var(--primary-light);
+  border: 1.5px solid #c8e6c9;
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.next-label { font-size: .82rem; color: var(--text-muted); }
+
+.next-date { font-weight: 700; color: var(--primary-dark); }
+
+.section-title {
+  margin: 26px 4px 10px;
+  font-size: .95rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.reservation-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.reservation-item {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.reservation-item.reserved { border-left: 5px solid var(--primary); }
+.reservation-item.available { border-left: 5px solid #ffb300; }
+.reservation-item.past { opacity: .55; }
+
+.day-box {
+  min-width: 52px;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.day-box .dow { display: block; font-size: .7rem; font-weight: 700; color: var(--primary); text-transform: uppercase; }
+.day-box .dom { display: block; font-size: 1.35rem; font-weight: 700; }
+.day-box .mon { display: block; font-size: .7rem; color: var(--text-muted); text-transform: uppercase; }
+
+.reservation-info { flex: 1; min-width: 0; }
+
+.reservation-item .btn { flex-shrink: 0; padding: 10px 16px; }
+.reservation-date { font-weight: 600; font-size: .95rem; }
+.reservation-state { display: block; font-size: .78rem; color: var(--text-muted); margin-top: 2px; }
+.reservation-state.reserved-state { color: var(--primary); font-weight: 600; }
+
+.empty-text { text-align: center; color: var(--text-muted); padding: 30px 0; }
+
+/* ---------------- Toast ---------------- */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(28px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  background: #263238;
+  color: #fff;
+  padding: 11px 20px;
+  border-radius: 24px;
+  font-size: .88rem;
+  box-shadow: var(--shadow);
+  z-index: 60;
+  max-width: 88vw;
+  text-align: center;
+}
+
+.toast.success { background: var(--primary-dark); }
+.toast.error   { background: var(--danger); }
+
+/* ---------------- Install banner ---------------- */
+
+.install-banner {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  background: #263238;
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .88rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,.35);
+  z-index: 50;
+}
+
+.install-banner span { flex: 1; }
+.install-banner .btn-primary { padding: 9px 16px; }
+
+/* ---------------- Busy spinner ---------------- */
+
+.spin { display: inline-block; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (min-width: 640px) {
+  .content { padding-top: 24px; }
+}

@@ -1,0 +1,12 @@
+# Secrets / local configuration
+config.yml
+data/
+*.sqlite
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node / misc
+.DS_Store

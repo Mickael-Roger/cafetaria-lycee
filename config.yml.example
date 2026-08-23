@@ -1,0 +1,42 @@
+# ============================================================
+# Cafetaria application configuration
+# Copy this file to config.yml and adjust the values.
+# ============================================================
+
+server:
+  # Address / port the application server binds to
+  host: 0.0.0.0
+  port: 8080
+
+  # Public domain the PWA is served from (used for absolute links)
+  domain: cafetaria.example.com
+
+  # Secret used to sign authentication tokens - CHANGE THIS
+  secret_key: please-change-this-secret
+
+  # Application log level (DEBUG, INFO, WARNING, ERROR)
+  log_level: INFO
+
+cafetaria:
+  # Login URL of the school cafetaria website
+  url: https://webparent.paiementdp.com/aliAuthentification.php?site=aes00152
+
+  # Credentials for the cafetaria website
+  username: your-cafetaria-login
+  password: your-cafetaria-password
+
+  # Credit (in euros) under which a low-balance warning is raised
+  low_credit_threshold: 10.0
+
+# How often (in minutes) reservations/credit are refreshed in background
+fetch_frequency_minutes: 60
+
+# Path of the local SQLite database file
+database: ./data/cafetaria.sqlite
+
+# Users of this application (used to log into the PWA)
+users:
+  - username: parent
+    password: parent123
+  - username: teen
+    password: teen456

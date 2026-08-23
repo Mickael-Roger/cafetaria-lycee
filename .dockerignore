@@ -1,0 +1,14 @@
+# Never bake configuration, secrets or local data into the image
+config.yml
+data/
+*.sqlite
+
+.git
+.gitignore
+Dockerfile
+.dockerignore
+README.md
+
+__pycache__/
+*.pyc
+.venv/
