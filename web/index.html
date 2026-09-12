@@ -41,8 +41,9 @@
         <span id="status-line" class="status-line">Loading…</span>
       </div>
       <div class="header-actions">
-        <form action="https://webparent.paiementdp.com/aliEncaissement.php" method="get"
+        <form action="https://webparent.paiementdp.com/aliAuthentification.php" method="get"
               target="_blank" rel="noopener noreferrer">
+          <input type="hidden" name="site" value="aes00152" />
           <button id="btn-refill" type="submit" class="icon-btn" title="Refill credit (opens in browser)" aria-label="Refill credit (opens in browser)">€</button>
         </form>
         <button id="btn-refresh" class="icon-btn" title="Refresh" aria-label="Refresh">⟳</button>

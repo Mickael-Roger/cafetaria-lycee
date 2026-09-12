@@ -124,7 +124,8 @@ for (const mobile of [false, true]) {
     await page.locator("#btn-refill").click();
     const payment = await opened;
     await payment.waitForLoadState();
-    assert.equal(new URL(payment.url()).pathname, "/aliEncaissement.php");
+    assert.equal(new URL(payment.url()).pathname, "/aliAuthentification.php");
+    assert.equal(new URL(payment.url()).search, "?site=aes00152");
     assert.equal(new URL(payment.url()).origin, "https://webparent.paiementdp.com");
     assert.equal(await payment.evaluate(() => window.opener), null);
     assert.equal(page.url(), url + "/");
