@@ -1,7 +1,7 @@
 /* Cafeteria PWA - service worker */
 "use strict";
 
-const CACHE_NAME = "cafetaria-cache-v1";
+const CACHE_NAME = "cafetaria-cache-v2";
 
 const APP_SHELL = [
   "/",
@@ -82,19 +82,16 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Static assets: stale-while-revalidate.
+  // Static assets: network first so online reloads use the latest app code.
   event.respondWith(
-    caches.match(request).then((cached) => {
-      const network = fetch(request)
-        .then((response) => {
-          if (response.ok) {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-          }
-          return response;
-        })
-        .catch(() => cached);
-      return cached || network;
-    })
+    fetch(request)
+      .then((response) => {
+        if (response.ok) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+        }
+        return response;
+      })
+      .catch(() => caches.match(request))
   );
 });

@@ -134,7 +134,9 @@
   // ------------------------------------------------------------------
   // Data loading
   // ------------------------------------------------------------------
+  var refreshVersion = 0;
   function refreshData(forceSync) {
+    var version = ++refreshVersion;
     setStatusLine("Refreshing…");
 
     var sync = forceSync
@@ -149,11 +151,13 @@
     });
 
     return load.then(function (results) {
+      if (version !== refreshVersion) return;
       if (results[0].ok) state.reservations = results[0].data || [];
       if (results[1].ok) state.credit = results[1].data.credit;
       if (results[2].ok) state.status = results[2].data;
       render();
     }).catch(function (err) {
+      if (version !== refreshVersion) return;
       if (navigator.onLine === false) {
         render(); // render whatever we have
         setStatusLine("Offline");
@@ -272,6 +276,7 @@
     var dateStr = reservation.date;
     if (state.busyDates[dateStr]) return;
     state.busyDates[dateStr] = true;
+    ++refreshVersion; // Ignore reads started before this reservation changed.
 
     var wasCancel = reservation.reserved;
     btn.disabled = true;
@@ -279,23 +284,33 @@
 
     api("/reservations/" + dateStr, { method: wasCancel ? "DELETE" : "POST" })
       .then(function (res) {
+        if (res.ok) {
+          state.reservations.forEach(function (r) {
+            if (r.date === dateStr) r.reserved = !wasCancel;
+          });
+        }
         var msg = (res.data && res.data.message) || "Done";
         toast(msg, res.ok ? "success" : "error");
-        // The mutation already synchronizes the backend reservations.
-        return refreshData();
       })
       .catch(function (err) {
         toast(err.message || "Action failed", "error");
       })
       .finally(function () {
         delete state.busyDates[dateStr];
+        renderNextReservation();
         renderReservations();
+        // Refresh balances separately: a slow read must not keep the day busy.
+        refreshData();
       });
   }
 
   // ------------------------------------------------------------------
-  // Refresh / connectivity
+  // Header actions / connectivity
   // ------------------------------------------------------------------
+  $("btn-refill").addEventListener("click", function () {
+    window.open("https://webparent.paiementdp.com/aliEncaissement.php", "_blank", "noopener,noreferrer");
+  });
+
   $("btn-refresh").addEventListener("click", function () {
     var btn = $("btn-refresh");
     btn.classList.add("spin");
