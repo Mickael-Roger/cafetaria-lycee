@@ -137,16 +137,16 @@
   function refreshData(forceSync) {
     setStatusLine("Refreshing…");
 
-    var load = Promise.all([
-      api("/reservations"),
-      api("/credit"),
-      api("/status"),
-    ]);
-
-    if (forceSync) {
-      load = api("/sync", { method: "POST" }).then(function () { return load; })
-        .catch(function () { return load; });
-    }
+    var sync = forceSync
+      ? api("/sync", { method: "POST" }).catch(function () {})
+      : Promise.resolve();
+    var load = sync.then(function () {
+      return Promise.all([
+        api("/reservations"),
+        api("/credit"),
+        api("/status"),
+      ]);
+    });
 
     return load.then(function (results) {
       if (results[0].ok) state.reservations = results[0].data || [];
@@ -253,6 +253,10 @@
         var btn = document.createElement("button");
         btn.className = "btn " + (r.reserved ? "btn-cancel" : "btn-reserve");
         btn.textContent = r.reserved ? "Cancel" : "Reserve";
+        if (state.busyDates[r.date]) {
+          btn.disabled = true;
+          btn.innerHTML = '<span class="spin">⟳</span>';
+        }
         btn.addEventListener("click", function () { onToggleReservation(r, btn); });
         li.appendChild(btn);
       }
@@ -277,13 +281,15 @@
       .then(function (res) {
         var msg = (res.data && res.data.message) || "Done";
         toast(msg, res.ok ? "success" : "error");
-        return refreshData(true);
+        // The mutation already synchronizes the backend reservations.
+        return refreshData();
       })
       .catch(function (err) {
         toast(err.message || "Action failed", "error");
-        btn.disabled = false;
-        btn.textContent = wasCancel ? "Cancel" : "Reserve";
+      })
+      .finally(function () {
         delete state.busyDates[dateStr];
+        renderReservations();
       });
   }
 
