@@ -177,6 +177,21 @@ cd cafetaria/server
 ../.venv-cafetaria/bin/python tests/e2e_test.py    # or any python with requests
 ```
 
+## Frontend tests
+
+From `web/`, run `npm ci` followed by `npm test`. For the real Chromium
+tests, run `npx playwright install --with-deps chromium` once, then
+`npm run test:browser`. Browser tests use a local mock API and never reserve
+real meals. They cover reservation updates, old service-worker caches, and
+the native payment button on desktop and mobile-sized pages.
+
+When changing frontend assets, bump the `?v=` values in `web/index.html` and
+`web/sw.js` together, along with `CACHE_NAME`. Changing only the worker cache
+does not stop an already-active older worker serving unversioned stale scripts
+during the first page load after an upgrade. Existing open pages need to be
+reloaded after deployment to run the new code. Docker deployments must rebuild
+the image and recreate the container, not just pull Git changes.
+
 ## API summary
 
 All `/api/*` endpoints (except `/api/login`) require

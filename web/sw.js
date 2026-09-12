@@ -1,13 +1,13 @@
 /* Cafeteria PWA - service worker */
 "use strict";
 
-const CACHE_NAME = "cafetaria-cache-v2";
+const CACHE_NAME = "cafetaria-cache-v3";
 
 const APP_SHELL = [
   "/",
   "/index.html",
-  "/css/app.css",
-  "/js/app.js",
+  "/css/app.css?v=3",
+  "/js/app.js?v=3",
   "/manifest.webmanifest",
   "/icons/icon-192.png",
   "/icons/icon-512.png",

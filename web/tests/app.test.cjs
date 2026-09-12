@@ -34,7 +34,6 @@ async function settle() {
 async function app() {
   const elements = new Map();
   const calls = [];
-  const opened = [];
   const backend = { reserved: false, failRead: false, failWrite: false, sync: null };
   const get = id => {
     if (!elements.has(id)) elements.set(id, new Element());
@@ -43,7 +42,7 @@ async function app() {
   vm.runInNewContext(source, {
     document: { getElementById: get, createElement: () => new Element() },
     localStorage: { getItem: () => "token", removeItem() {} },
-    window: { addEventListener() {}, open: (...args) => opened.push(args) },
+    window: { addEventListener() {} },
     navigator: { onLine: true },
     setTimeout() {}, clearTimeout() {},
     fetch: async (url, options) => {
@@ -67,18 +66,10 @@ async function app() {
   });
   await settle();
   return {
-    backend, calls, get, opened,
+    backend, calls, get,
     button: () => get("reservation-list").children[0].children[0],
   };
 }
-
-test("refill button opens payment page in a separate tab", async () => {
-  const ui = await app();
-  ui.get("btn-refill").click();
-  assert.deepEqual(ui.opened, [[
-    "https://webparent.paiementdp.com/aliEncaissement.php", "_blank", "noopener,noreferrer",
-  ]]);
-});
 
 test("reserve then cancel without reloading or redundant sync", async () => {
   const ui = await app();

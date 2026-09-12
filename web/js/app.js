@@ -307,10 +307,6 @@
   // ------------------------------------------------------------------
   // Header actions / connectivity
   // ------------------------------------------------------------------
-  $("btn-refill").addEventListener("click", function () {
-    window.open("https://webparent.paiementdp.com/aliEncaissement.php", "_blank", "noopener,noreferrer");
-  });
-
   $("btn-refresh").addEventListener("click", function () {
     var btn = $("btn-refresh");
     btn.classList.add("spin");

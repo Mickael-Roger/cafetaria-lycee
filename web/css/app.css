@@ -195,8 +195,6 @@ html, body {
   gap: 6px;
 }
 
-.credit-label { font-size: .82rem; opacity: .85; }
-
 .credit-value { font-size: 2rem; font-weight: 700; letter-spacing: .5px; }
 
 .next-card {

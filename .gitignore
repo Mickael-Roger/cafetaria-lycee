@@ -9,4 +9,5 @@ __pycache__/
 .venv/
 
 # Node / misc
+node_modules/
 .DS_Store
